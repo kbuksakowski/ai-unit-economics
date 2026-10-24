@@ -1,0 +1,29 @@
+{
+  "name": "ai-unit-economics",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Attribute AI inference cost to the customers and features that caused it, with a number that says what it leaves out.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kbuksakowski/ai-unit-economics.git"
+  },
+  "packageManager": "pnpm@11.24.0",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=11.0.0"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/node": "26.4.0",
+    "prettier": "3.6.2",
+    "typescript": "7.0.2",
+    "vitest": "4.1.11"
+  }
+}

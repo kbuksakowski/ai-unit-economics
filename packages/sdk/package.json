@@ -1,0 +1,60 @@
+{
+  "name": "@ai-unit-economics/sdk",
+  "version": "0.1.0-alpha.0",
+  "description": "Attribute AI inference cost to your customers and features. Wraps your provider call; never sees prompts or keys.",
+  "license": "Apache-2.0",
+  "author": "Kamil Buksakowski <oss@kamilbuksakowski.dev>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kbuksakowski/ai-unit-economics.git",
+    "directory": "packages/sdk"
+  },
+  "homepage": "https://github.com/kbuksakowski/ai-unit-economics#readme",
+  "bugs": {
+    "url": "https://github.com/kbuksakowski/ai-unit-economics/issues"
+  },
+  "keywords": [
+    "ai",
+    "llm",
+    "anthropic",
+    "claude",
+    "cost",
+    "attribution",
+    "usage",
+    "telemetry"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "!src/**/*.test.ts",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "engines": {
+    "node": ">=22.13"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "prepack": "pnpm --filter \"@ai-unit-economics/sdk^...\" build && pnpm run clean && pnpm run build"
+  },
+  "devDependencies": {
+    "@ai-unit-economics/contracts": "workspace:*",
+    "@anthropic-ai/sdk": "0.124.0"
+  }
+}

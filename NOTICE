@@ -1,0 +1,13 @@
+AI Unit Economics
+Copyright 2026 Kamil Buksakowski
+
+This product includes software developed as part of the
+AI Unit Economics project (https://github.com/kbuksakowski/ai-unit-economics).
+
+Licensed under the Apache License, Version 2.0.
+
+This product includes pricing data derived from LiteLLM
+(https://github.com/BerriAI/litellm), copyright (c) 2023 Berri AI, licensed under the
+MIT License. The vendored slice and the commit it was taken from are in
+packages/pricing-data/snapshot/, with the licence text in
+LITELLM-LICENSE.

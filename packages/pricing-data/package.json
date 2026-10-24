@@ -1,0 +1,26 @@
+{
+  "name": "@ai-unit-economics/pricing-data",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Effective-dated provider prices as data, pinned to a source commit.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "snapshot"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "import:litellm": "node dist/cli/import-litellm.js"
+  }
+}

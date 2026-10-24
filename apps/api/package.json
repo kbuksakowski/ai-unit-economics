@@ -1,0 +1,36 @@
+{
+  "name": "@ai-unit-economics/api",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Ingestion and analytics API.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "start": "node dist/main.js",
+    "migrate": "node dist/cli/migrate.js",
+    "create-project": "node dist/cli/create-project.js",
+    "derive-facts": "node dist/cli/derive-facts.js",
+    "seed-demo": "node dist/cli/seed-demo.js"
+  },
+  "dependencies": {
+    "@ai-unit-economics/contracts": "workspace:*",
+    "@ai-unit-economics/core": "workspace:*",
+    "@ai-unit-economics/pricing-data": "workspace:*",
+    "@nestjs/common": "12.1.2",
+    "@nestjs/core": "12.1.2",
+    "@nestjs/platform-express": "12.1.2",
+    "@nestjs/typeorm": "12.0.2",
+    "mysql2": "3.24.5",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2",
+    "typeorm": "1.1.1",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@ai-unit-economics/sdk": "workspace:*",
+    "@anthropic-ai/sdk": "0.124.0"
+  }
+}

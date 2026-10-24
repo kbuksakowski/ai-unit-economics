@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Read-only token: CI only checks out and tests.
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # Ingestion tests run against real MariaDB: idempotency is a unique index, and only
+    # the database can prove it holds (ADR-0009). Same image and host port as docker-compose.yml.
+    services:
+      mariadb:
+        image: mariadb:11.8
+        env:
+          MARIADB_ROOT_PASSWORD: root
+        ports:
+          - 3307:3306
+        options: >-
+          --health-cmd "healthcheck.sh --connect --innodb_initialized"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm format:check
+      - run: pnpm build
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  # The SDK runs inside other people's applications and promises Node >= 22.13, so it is
+  # tested on the oldest and newest supported lines, and its tarball is checked to contain
+  # the built code — a clean `npm pack` once shipped a package without it.
+  sdk:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 22.13 is also the oldest Node that pnpm 11 itself runs on.
+        node: ['22.13', '24']
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter "@ai-unit-economics/sdk..." build
+      - run: pnpm --filter @ai-unit-economics/sdk test
+      # From an empty dist, so it proves prepack builds the code. Plain-text listing: npm 10
+      # prints script output on stdout, which breaks parsing --json.
+      - name: Tarball contains the built code
+        working-directory: packages/sdk
+        run: |
+          rm -rf dist tsconfig.tsbuildinfo
+          npm pack --dry-run 2>&1 | tee pack.log
+          grep -q 'dist/index.js' pack.log

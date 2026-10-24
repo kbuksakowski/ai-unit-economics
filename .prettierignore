@@ -1,0 +1,6 @@
+pnpm-lock.yaml
+dist/
+.next/
+coverage/
+LICENSE
+next-env.d.ts

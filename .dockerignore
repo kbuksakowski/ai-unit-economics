@@ -1,0 +1,12 @@
+# Only what the images build from. Private notes never enter an image.
+**/node_modules
+**/dist
+**/.next
+**/*.tsbuildinfo
+**/next-env.d.ts
+**/.env
+**/.env.*
+.git
+.playwright-mcp
+.claude
+coverage
